@@ -48,7 +48,8 @@ def get_google_images_seo_related(keywords):
     # div with attribute jscontroller="ONqfcd" 
     # => if exist list inside that => get all "a span" and text of that span 
     results = dict(zip(keywords, list(len(keywords)*[[]])))
-    for query in keywords:        
+    for query in keywords:
+        print(f"checking {query} on images")
         resp_text = gquery_return_response_text(
             query=query,
             img_mode=True
@@ -60,7 +61,7 @@ def get_google_images_seo_related(keywords):
         )
         for span in spans:
             results[query].append(span.text)
-    # pprint.pprint(str(results))
+    pprint.pprint(str(results))
     write_file(
         'google-image.txt',
         pprint.pformat(results)
@@ -83,6 +84,7 @@ def get_seo_related_in_ranks(kw_path):
         'images': []
     } # have to check mehdi
     for link in first_ranks:
+        print(f"checking this {link}")
         response = send_request(link).text
         soup = BeautifulSoup(response, 'html.parser')        
         # adding alt tags
@@ -115,7 +117,7 @@ def get_seo_related_in_ranks(kw_path):
         extracted_data['h2'] = extracted_data['h1'] + h2s
         print(extracted_data['h1'], extracted_data['h2'])
     # print(json.dumps(extracted_data, indent=4, sort_keys=True))
-    # pprint.pprint(str(extracted_data))
+    pprint.pprint(str(extracted_data))
     write_file(
         'in-site.txt',
         pprint.pformat(extracted_data)
