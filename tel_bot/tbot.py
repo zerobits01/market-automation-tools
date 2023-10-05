@@ -56,13 +56,15 @@ def receive_password(update: Update, context: CallbackContext) -> int:
             # be sure that its executable
             print(f"start update process")
             update.message.reply_text("starting udpate process, please waite...")
-            output = subprocess.run(
-                ["/home/zerobits01/market-automation-tools/tel_bot/utils/update.sh"], 
-                shell=True
+            output = subprocess.call(
+                ["/bin/bash", "/home/zerobits01/market-automation-tools/tel_bot/utils/update.sh"], 
             )
+            with open('/tmp/update_changes.log', 'r') as f:
+                lines = f.readlines();
+                update.message.reply_text(f"change log: {lines}")
             print(output)
             update.message.reply_text(f"output result: {output}")
-            if output.returncode == 0:
+            if output == 0:
                 update.message.reply_text(f"Site updated for username: {username}")
             else:
                 update.message.reply_text(f"Site couldnt be updated please contact @zerobits01")
