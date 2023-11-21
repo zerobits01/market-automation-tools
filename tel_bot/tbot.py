@@ -103,8 +103,9 @@ def restartui_receive_password(update: Update, context: CallbackContext) -> int:
         if input_cred==TBOT_CRED:
             # be sure that its executable
             print(f"restart process")
+
             output = subprocess.call(
-                ["/bin/bash", "sudo systemctl restart kit365-ui.service"], 
+                ["/bin/bash", "/home/zerobits01/market-automation-tools/tel_bot/utils/restartui.sh"], 
             )
             print(output)
             update.message.reply_text(f"output result: {output}")
